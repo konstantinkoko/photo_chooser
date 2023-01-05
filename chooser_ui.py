@@ -116,7 +116,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
 
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "PhotoChoiser"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "PhotoChooser"))
         self.label_5.setText(_translate("MainWindow", "Путь до raw файлов:"))
         self.label_4.setText(_translate("MainWindow", self.way_to_raw))
         self.pushButton_3.setText(_translate("MainWindow", "изменить"))
