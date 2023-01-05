@@ -1,5 +1,5 @@
 import sqlite3
-import choiser_lib as choiser
+import chooser_lib as chooser
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
@@ -130,20 +130,20 @@ class Ui_MainWindow(object):
         self.pushButton_2.clicked.connect(self.push_button_2)
         self.pushButton_3.clicked.connect(self.push_button_3)
 
-        self.plainTextEdit.setPlaceholderText('paste names of choosed photos')
+        self.plainTextEdit.setPlaceholderText('вставте текст с номерами выбранных фотографий')
 
 
     def push_button(self):
 
         try:
         
-            raw_file_list = choiser.get_list_of_raw_files(self.way_to_raw)
+            raw_file_list = chooser.get_list_of_raw_files(self.way_to_raw)
 
             text = self.plainTextEdit.toPlainText()
-            changed_photos_names_list = choiser.get_list_from_text(text)
+            changed_photos_names_list = chooser.get_list_from_text(text)
 
-            update_list = choiser.get_files_to_update(raw_file_list, changed_photos_names_list)
-            choiser.update_rating_in_catalog(self.way_to_catalog, self.way_to_raw, update_list)
+            update_list = chooser.get_files_to_update(raw_file_list, changed_photos_names_list)
+            chooser.update_rating_in_catalog(self.way_to_catalog, self.way_to_raw, update_list)
             
         except sqlite3.DatabaseError:
             self.pushButton.setText("файл каталога выбран неверно")
@@ -154,14 +154,14 @@ class Ui_MainWindow(object):
     
     
     def push_button_2(self):
-        self.way_to_catalog = choiser.change_way_to_file('выбор каталога lightroom')
+        self.way_to_catalog = chooser.change_way_to_file('выбор каталога lightroom')
         self.label_2.setText(self.way_to_catalog)
-        choiser.refresh_way_to_catalog_info(self.way_to_catalog)
+        chooser.refresh_way_to_catalog_info(self.way_to_catalog)
         self.pushButton.setText("OK")
 
 
     def push_button_3(self):
-        self.way_to_raw = choiser.change_way_to_dir('выбор директории с raw-файлами')
+        self.way_to_raw = chooser.change_way_to_dir('выбор директории с raw-файлами')
         self.label_4.setText(self.way_to_raw)
     
 
@@ -172,8 +172,8 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
 
-    way_to_raw = choiser.get_way_to_raw()
-    way_to_catalog = choiser.get_way_to_catalog()
+    way_to_raw = chooser.get_way_to_raw()
+    way_to_catalog = chooser.get_way_to_catalog()
 
     ui = Ui_MainWindow(way_to_raw, way_to_catalog)
     ui.setupUi(MainWindow)
