@@ -7,14 +7,13 @@ import sys
 
 class Ui_MainWindow(object):
 
-    def __init__(self, way_to_raw, way_to_catalog) -> None:
-
+    def __init__(self, way_to_raw: str, way_to_catalog: str) -> None:
         super().__init__()
         self.way_to_raw = way_to_raw
         self.way_to_catalog = way_to_catalog
 
 
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow: QtWidgets.QMainWindow) -> None:
 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(1000, 650)
@@ -113,7 +112,7 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
     
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, MainWindow: QtWidgets.QMainWindow) -> None:
 
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "PhotoChooser"))
@@ -130,21 +129,17 @@ class Ui_MainWindow(object):
         self.pushButton_2.clicked.connect(self.push_button_2)
         self.pushButton_3.clicked.connect(self.push_button_3)
 
-        self.plainTextEdit.setPlaceholderText('вставте текст с номерами выбранных фотографий')
+        self.plainTextEdit.setPlaceholderText('вставте текст c номерами выбранных фотографий')
 
 
-    def push_button(self):
+    def push_button(self) -> None:
 
         try:
-        
             raw_file_list = chooser.get_list_of_raw_files(self.way_to_raw)
-
             text = self.plainTextEdit.toPlainText()
             changed_photos_names_list = chooser.get_list_from_text(text)
-
             update_list = chooser.get_files_to_update(raw_file_list, changed_photos_names_list)
             chooser.update_rating_in_catalog(self.way_to_catalog, self.way_to_raw, update_list)
-            
         except sqlite3.DatabaseError:
             self.pushButton.setText("файл каталога выбран неверно")
         except FileNotFoundError:
@@ -153,18 +148,16 @@ class Ui_MainWindow(object):
             self.pushButton.setText("файл каталога выбран неверно")
     
     
-    def push_button_2(self):
+    def push_button_2(self) -> None:
         self.way_to_catalog = chooser.change_way_to_file('выбор каталога lightroom')
         self.label_2.setText(self.way_to_catalog)
         chooser.refresh_way_to_catalog_info(self.way_to_catalog)
         self.pushButton.setText("OK")
 
 
-    def push_button_3(self):
+    def push_button_3(self) -> None:
         self.way_to_raw = chooser.change_way_to_dir('выбор директории с raw-файлами')
         self.label_4.setText(self.way_to_raw)
-    
-
 
 
 if __name__ == "__main__":
@@ -177,6 +170,5 @@ if __name__ == "__main__":
 
     ui = Ui_MainWindow(way_to_raw, way_to_catalog)
     ui.setupUi(MainWindow)
-
     MainWindow.show()
     sys.exit(app.exec_())

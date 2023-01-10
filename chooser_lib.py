@@ -24,13 +24,13 @@ def get_way_to_catalog() -> str:
 def get_way_to_raw() -> str:
     return f'{os.getcwd()}'
 
-def change_way_to_dir(title) -> tk.askdirectory:
+def change_way_to_dir(title: str) -> tk.askdirectory:
     return tk.askdirectory(title=title)
 
-def change_way_to_file(title) -> tk.askopenfilename:
+def change_way_to_file(title: str) -> tk.askopenfilename:
     return tk.askopenfilename(title=title)
     
-def refresh_way_to_catalog_info(way_to_catalog) -> None:
+def refresh_way_to_catalog_info(way_to_catalog: str) -> None:
     with open(way_to_catalog_info, 'w') as inf:
             inf.write(way_to_catalog)
 
@@ -52,7 +52,7 @@ def get_list_of_raw_files(way_do_dir: str) -> list:
         raise FileNotFoundError
     return raw_files
 
-def get_files_to_update(raw_files, changed_photos: str) -> list:
+def get_files_to_update(raw_files: list, changed_photos: str) -> list:
     """Формирует список имён выбранных файлов"""
     changed_files_numbers = [_get_number_from_name(file_name) for file_name in changed_photos]
     files_to_change = []
@@ -61,7 +61,7 @@ def get_files_to_update(raw_files, changed_photos: str) -> list:
             files_to_change.append(file)
     return tuple(files_to_change)
 
-def update_rating_in_catalog(way_to_catalog, way_to_dir: str, update_list: tuple) -> None:
+def update_rating_in_catalog(way_to_catalog: str, way_to_dir: str, update_list: tuple) -> None:
     """Устанавливает рейтинг, изменяя каталог lightroom"""
     try:
         connection = sqlite3.connect(way_to_catalog)
